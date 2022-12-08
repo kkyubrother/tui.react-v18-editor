@@ -2,6 +2,7 @@
   "name": "@toast-ui/react-editor",
   "version": "3.2.2",
   "description": "TOAST UI Editor for React",
+  "private": "true",
   "files": [
     "dist",
     "index.d.ts"
