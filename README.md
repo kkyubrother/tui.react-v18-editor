@@ -1,70 +1,167 @@
-# Getting Started with Create React App
+# TOAST UI Editor for React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> This is a [React](https://reactjs.org/) component wrapping [TOAST UI Editor](https://github.com/nhn/tui.editor/tree/master/apps/editor).
 
-## Available Scripts
+[![npm version](https://img.shields.io/npm/v/@toast-ui/react-editor.svg)](https://www.npmjs.com/package/@toast-ui/react-editor)
 
-In the project directory, you can run:
+## 🚩 Table of Contents
 
-### `npm start`
+- [Collect Statistics on the Use of Open Source](#collect-statistics-on-the-use-of-open-source)
+- [Install](#-install)
+- [Usage](#-usage)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Collect Statistics on the Use of Open Source
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+React Wrapper of TOAST UI Editor applies Google Analytics (GA) to collect statistics on the use of open source, in order to identify how widely TOAST UI Editor is used throughout the world. It also serves as important index to determine the future course of projects. location.hostname (e.g. ui.toast.com) is to be collected and the sole purpose is nothing but to measure statistics on the usage. To disable GA, use the `usageStatistics` props like the example below.
 
-### `npm test`
+```js
+<Editor
+  ...
+  usageStatistics={false}
+/>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 💾 Install
 
-### `npm run build`
+### Using npm
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+npm install --save @toast-ui/react-editor
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📝 Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Import
 
-### `npm run eject`
+You can use TOAST UI Editor for React as a ECMAScript module or a CommonJS module. As this module does not contain CSS files, you should import `toastui-editor.css` from `@toast-ui/editor` in the script.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- ES Modules
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+import '@toast-ui/editor/dist/toastui-editor.css';
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+import { Editor } from '@toast-ui/react-editor';
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- CommonJS
 
-## Learn More
+```js
+require('@toast-ui/editor/dist/toastui-editor.css');
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const { Editor } = require('@toast-ui/react-editor');
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Props
 
-### Code Splitting
+[All the options of the TOAST UI Editor](https://nhn.github.io/tui.editor/latest/ToastUIEditor) are supported in the form of props.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```js
+import '@toast-ui/editor/dist/toastui-editor.css';
 
-### Analyzing the Bundle Size
+import { Editor } from '@toast-ui/react-editor';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+const MyComponent = () => (
+  <Editor
+    initialValue="hello react editor world!"
+    previewStyle="vertical"
+    height="600px"
+    initialEditType="markdown"
+    useCommandShortcut={true}
+  />
+);
+```
 
-### Making a Progressive Web App
+### Instance Methods
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+For using [instance methods of TOAST UI Editor](https://nhn.github.io/tui.editor/latest/ToastUIEditor#addHook), first thing to do is creating Refs of wrapper component using [`createRef()`](https://reactjs.org/docs/refs-and-the-dom.html#creating-refs). But the wrapper component does not provide a way to call instance methods of TOAST UI Editor directly. Instead, you can call `getInstance()` method of the wrapper component to get the instance, and call the methods on it.
 
-### Advanced Configuration
+```js
+import '@toast-ui/editor/dist/toastui-editor.css';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+import { Editor } from '@toast-ui/react-editor';
 
-### Deployment
+class MyComponent extends React.Component {
+  editorRef = React.createRef();
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  handleClick = () => {
+    this.editorRef.current.getInstance().exec('bold');
+  };
 
-### `npm run build` fails to minify
+  render() {
+    return (
+      <>
+        <Editor
+          previewStyle="vertical"
+          height="400px"
+          initialEditType="markdown"
+          initialValue="hello"
+          ref={this.editorRef}
+        />
+        <button onClick={this.handleClick}>make bold</button>
+      </>
+    );
+  }
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Getting the Root Element
+
+An instance of the wrapper component also provides a handy method for getting the root element. If you want to manipulate the root element directly, you can call `getRootElement` to get the element.
+
+```js
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+import { Editor } from '@toast-ui/react-editor';
+
+class MyComponent extends React.Component {
+  editorRef = React.createRef();
+
+  handleClickButton = () => {
+    this.editorRef.current.getRootElement().classList.add('my-editor-root');
+  };
+
+  render() {
+    return (
+      <>
+        <Editor
+          previewStyle="vertical"
+          height="400px"
+          initialEditType="markdown"
+          initialValue="hello"
+          ref={this.editorRef}
+        />
+        <button onClick={this.handleClickButton}>Click!</button>
+      </>
+    );
+  }
+}
+```
+
+### Events
+
+[All the events of TOAST UI Editor](https://nhn.github.io/tui.editor/latest/ToastUIEditor#focus) are supported in the form of `on[EventName]` props. The first letter of each event name should be capitalized. For example, for using `focus` event you can use `onFocus` prop like the example below.
+
+```js
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+import { Editor } from '@toast-ui/react-editor';
+
+class MyComponent extends React.Component {
+  handleFocus = () => {
+    console.log('focus!!');
+  };
+
+  render() {
+    return (
+      <Editor
+        previewStyle="vertical"
+        height="400px"
+        initialEditType="markdown"
+        initialValue="hello"
+        ref={this.editorRef}
+        onFocus={this.handleFocus}
+      />
+    );
+  }
+}
+```

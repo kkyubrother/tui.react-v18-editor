@@ -1,38 +1,40 @@
 {
-  "name": "tui.react-v18-editor",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "@toast-ui/react-editor",
+  "version": "3.2.2",
+  "description": "TOAST UI Editor for React",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "main": "dist/toastui-react-editor.js",
+  "module": "dist/esm/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:types": "tsc",
+    "lint": "eslint .",
+    "serve": "snowpack dev",
+    "build": "webpack build && rollup -c"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "homepage": "https://ui.toast.com",
+  "bugs": {
+    "url": "https://github.com/nhn/tui.editor/issues"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "NHN Cloud FE Development Lab <dl_javascript@nhn.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nhn/tui.editor.git",
+    "directory": "apps/react-editor"
+  },
+  "license": "MIT",
+  "browserslist": "last 2 versions, ie 11",
+  "peerDependencies": {
+    "react": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@toast-ui/editor": "^3.2.1"
   }
 }
