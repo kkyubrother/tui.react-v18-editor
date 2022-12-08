@@ -21,11 +21,11 @@
   "author": "NHN Cloud FE Development Lab <dl_javascript@nhn.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nhn/tui.editor.git",
+    "url": "https://github.com/kkyubrother/tui.react-v18-editor.git",
     "directory": "apps/react-editor"
   },
   "license": "MIT",
-  "browserslist": "last 2 versions, ie 11",
+  "browserslist": "last 2 versions",
   "peerDependencies": {
     "react": "^17.0.1"
   },
